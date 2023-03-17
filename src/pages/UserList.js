@@ -2,8 +2,10 @@ import ListItem from "../components/ListItem"
 import "./styles/UserList.css"
 import {ApiUrls} from "../enviroments/enviroments";
 import { useEffect, useState, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import  axios  from "axios";
 export default function UserList() {
+    const navigate = useNavigate();
     const [userList, setUserList] = useState([]);
     const [userParams, setUserParams] = useState({
         page: 1,
@@ -12,6 +14,11 @@ export default function UserList() {
     // const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const handleClick = (id) => {
+        navigate(`/list/${id}`)
+      };
+
 
     useEffect(() => {
         if(!userList.length)
@@ -51,9 +58,12 @@ export default function UserList() {
         {!userList?.length ? (
           <p>Sorry, there is no barber to display</p>
         ) : (
-            userList.map((listItem, index) => {
-
-                return (<ListItem user={listItem} key={listItem.id}/>)
+            userList.map((listItem) => {
+                return (
+                  <div  onClick={() => handleClick(listItem.id)} key={listItem.id} >
+                    <ListItem user={listItem} />
+                  </div>
+                )
             })
         )}
         {isLoading && <p>Loading more data...</p>}

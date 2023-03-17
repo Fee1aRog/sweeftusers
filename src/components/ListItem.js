@@ -11,7 +11,7 @@ export default function ListItem({user}) {
                 }}
               ></div>
               <div className="content">
-                <h1>{user.name}</h1>
+                <h1>{`${user.prefix} ${user.name} ${user.lastName}`}</h1>
                 <p>{user.title}</p>
               </div>
             </div>
